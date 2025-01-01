@@ -29,6 +29,7 @@ print(completion.choices[0].message.content)
 time.sleep(seconds_to_next_hour)
 
 while True:
+    now = datetime.now()
     completion = client.chat.completions.create(
         model=ai_model,
         messages=[
