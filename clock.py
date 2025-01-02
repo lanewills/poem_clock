@@ -2,6 +2,7 @@ from openai import OpenAI
 from datetime import datetime
 import time
 from messages import get_message
+from internetcheck import internet_check
 from secrets import API_KEY
 
 # OpenAI model to use
@@ -16,6 +17,7 @@ system_message = get_message(now)
 # Clock generates poems every hour, because I'm not rich enough for every minute
 seconds_to_next_hour = (60 - now.minute) * 60 - now.second
 
+internet_check()
 completion = client.chat.completions.create(
     model=ai_model,
     store=True,
@@ -33,6 +35,7 @@ time.sleep(seconds_to_next_hour)
 while True:
     now = datetime.now()
     system_message = get_message(now)
+    internet_check()
     completion = client.chat.completions.create(
         model=ai_model,
         store=True,
@@ -42,4 +45,6 @@ while True:
         ]
     )
     print(completion.choices[0].message.content)
-    time.sleep(3600)
+
+    now = datetime.now()
+    time.sleep((60 - now.minute) * 60 - now.second)

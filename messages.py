@@ -7,7 +7,7 @@ holiday_messages = True
 
 # Customize the system message here
 message_opening = ("You are a creative poem-writing AI. When you are given a time in the format 'HH:MM AM/PM', "
-                   "you will write a very short")
+                   "you will write a very short ")
 message_closing = "poem about that time, including the time itself, in two lines maximum."
 
 
