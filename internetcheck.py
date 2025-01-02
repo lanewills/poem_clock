@@ -1,6 +1,7 @@
 import socket
 
 
+# Checks for an active internet connection by connecting to Google's DNS server
 def internet_check(host="8.8.8.8", port=53, timeout=3):
     while True:
         try:
