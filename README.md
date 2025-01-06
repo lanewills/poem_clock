@@ -1,7 +1,4 @@
 # Poem Clock
-A clock that tells time with poems.
-
-## Description
 Poem Clock is a clock that tells the time with AI generated poems, displayed on an e-ink display.
 Driven by a Raspberry pi and Python script that fetches poems through the OpenAI API.
 Gets festive during holidays and special occasions.
