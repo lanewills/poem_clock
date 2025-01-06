@@ -1,21 +1,31 @@
-from openai import OpenAI
-from datetime import datetime
+import os
 import time
+from openai import OpenAI
+from datetime import datetime, timedelta
 from messages import get_message
 from internetcheck import internet_check
-from secrets import API_KEY
+from dotenv import load_dotenv
 
+# Time between poem generations in minutes. Works best with intervals of 1, 5, 15, 30, or 60.
+interval = 5
 # OpenAI model to use
 ai_model = "gpt-4o-mini"
+
+load_dotenv()
 client = OpenAI(
-    api_key=API_KEY
+    api_key=os.getenv("OPENAI_API_KEY")
 )
+
+
+# Returns the number of seconds until the next interval
+def get_seconds_to_next_interval(now_interval, time_interval):
+    next_interval_minute = (now_interval.minute // time_interval + 1) * time_interval
+    next_interval_time = now_interval.replace(minute=0, second=0, microsecond=0) + timedelta(minutes=next_interval_minute)
+    return (next_interval_time - now_interval).total_seconds()
+
 
 now = datetime.now()
 system_message = get_message(now)
-
-# Clock generates poems every hour, because I'm not rich enough for every minute
-seconds_to_next_hour = (60 - now.minute) * 60 - now.second
 
 internet_check()
 completion = client.chat.completions.create(
@@ -28,8 +38,9 @@ completion = client.chat.completions.create(
 )
 print(completion.choices[0].message.content)
 
-# Makes sure clock starts at the top of the next hour
-time.sleep(seconds_to_next_hour)
+# Sleep until the next interval
+seconds_to_next_interval = get_seconds_to_next_interval(now, interval)
+time.sleep(seconds_to_next_interval)
 
 # Main clock loop
 while True:
@@ -47,4 +58,4 @@ while True:
     print(completion.choices[0].message.content)
 
     now = datetime.now()
-    time.sleep((60 - now.minute) * 60 - now.second)
+    time.sleep(get_seconds_to_next_interval(now, interval))
