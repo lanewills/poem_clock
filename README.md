@@ -12,19 +12,19 @@ Gets festive during holidays and special occasions.
 ## Installation and Usage
 - Clone the repository
 
-```git clone https://github.com/lanewills/poem_clock.git```
+    ```git clone https://github.com/lanewills/poem_clock.git```
 
 - Install the required libraries
     
-```pip install -r requirements.txt```
+    ```pip install -r requirements.txt```
 
 - Create a .env file in the root directory and add your OpenAI API key
 
-```OPENAI_API_KEY="<YOUR_API_KEY>"```
+    ```OPENAI_API_KEY="<YOUR_API_KEY>"```
 
 - Run the script
     
-```python3 clock.py```
+    ```python3 clock.py```
 
 - Enjoy the poems
 
