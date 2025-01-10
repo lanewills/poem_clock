@@ -1,4 +1,4 @@
-import epd4in26
+from waveshare import epd4in26
 from PIL import Image, ImageDraw, ImageFont
 import time
 
