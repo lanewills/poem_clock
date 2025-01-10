@@ -8,7 +8,7 @@ epd.init()
 epd.Clear()
 print('init and clear')
 
-font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 100)
+font = ImageFont.truetype('/usr/share/fonts/truetype/piboto/PibotoCondensed-Bold.ttf', 50)
 image = Image.new('1', (epd.width, epd.height), 255)
 draw = ImageDraw.Draw(image)
 draw.text((10, 10), 'The quick brown fox jumped over the lazy dog to get to the pub to get some cold brews then he went to the at the all for the', font=font, fill=0)
