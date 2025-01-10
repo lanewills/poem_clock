@@ -1,4 +1,5 @@
 import os
+import logging
 import time
 from openai import OpenAI
 from datetime import datetime, timedelta
@@ -10,6 +11,8 @@ from dotenv import load_dotenv
 interval = 5
 # OpenAI model to use
 ai_model = "gpt-4o-mini"
+
+logging.basicConfig(level=logging.INFO)
 
 load_dotenv()
 client = OpenAI(
@@ -36,6 +39,7 @@ completion = client.chat.completions.create(
         {"role": "user", "content": now.strftime("%I:%M %p")}
     ]
 )
+logging.info("Printing poem")
 print(completion.choices[0].message.content)
 
 # Sleep until the next interval
@@ -55,6 +59,7 @@ while True:
             {"role": "user", "content": datetime.now().strftime("%I:%M %p")}
         ]
     )
+    logging.info("Printing poem")
     print(completion.choices[0].message.content)
 
     now = datetime.now()

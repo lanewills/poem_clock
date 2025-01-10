@@ -2,4 +2,7 @@ openai
 datetime
 python-dateutil
 gpiozero
+spidev
+pillow
 python-dotenv
+logging
