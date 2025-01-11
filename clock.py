@@ -15,6 +15,7 @@ interval = 5
 ai_model = "gpt-4o-mini"
 
 epd = epd4in26.EPD()
+epd.init()
 
 logging.basicConfig(level=logging.INFO)
 
