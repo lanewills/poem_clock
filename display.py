@@ -9,7 +9,7 @@ def draw_text(text, epd):
     image = Image.new('1', (epd.width, epd.height), 255)
     draw = ImageDraw.Draw(image)
 
-    wrapped_text = textwrap.fill(text, width=20)
+    wrapped_text = textwrap.fill(text, width=19)
     draw.multiline_text((10, 10), wrapped_text, font=font, fill=0)
 
     epd.init()
