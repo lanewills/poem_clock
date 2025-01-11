@@ -5,12 +5,16 @@ from openai import OpenAI
 from datetime import datetime, timedelta
 from messages import get_message
 from internetcheck import internet_check
+from waveshare import epd4in26
+from display import draw_text
 from dotenv import load_dotenv
 
 # Time between poem generations in minutes. Works best with intervals of 1, 5, 15, 30, or 60.
 interval = 5
 # OpenAI model to use
 ai_model = "gpt-4o-mini"
+
+epd = epd4in26.EPD()
 
 logging.basicConfig(level=logging.INFO)
 
@@ -39,8 +43,9 @@ completion = client.chat.completions.create(
         {"role": "user", "content": now.strftime("%I:%M %p")}
     ]
 )
-logging.info("Printing poem")
-print(completion.choices[0].message.content)
+logging.info("Poem generated")
+completion_content = completion.choices[0].message.content.replace('\n', '/')
+draw_text(completion_content, epd)
 
 # Sleep until the next interval
 seconds_to_next_interval = get_seconds_to_next_interval(now, interval)
@@ -59,8 +64,9 @@ while True:
             {"role": "user", "content": datetime.now().strftime("%I:%M %p")}
         ]
     )
-    logging.info("Printing poem")
-    print(completion.choices[0].message.content)
+    logging.info("Poem generated")
+    completion_content = completion.choices[0].message.content.replace('\n', '/')
+    draw_text(completion_content, epd)
 
     now = datetime.now()
     time.sleep(get_seconds_to_next_interval(now, interval))
