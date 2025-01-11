@@ -46,7 +46,7 @@ completion = client.chat.completions.create(
 )
 logging.info("Poem generated")
 logging.info(completion.choices[0].message)
-completion_content = completion.choices[0].message.content.replace('\n', ' / ')
+completion_content = completion.choices[0].message.content.replace('  \n', ' / ')
 draw_text(completion_content, epd)
 
 # Sleep until the next interval
@@ -69,7 +69,7 @@ while True:
     )
     logging.info("poem generated")
     logging.info(completion.choices[0].message)
-    completion_content = completion.choices[0].message.content.replace('\n', ' / ')
+    completion_content = completion.choices[0].message.content.replace('  \n', ' / ')
     draw_text(completion_content, epd)
 
     now = datetime.now()
