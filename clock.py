@@ -15,7 +15,6 @@ interval = 5
 ai_model = "gpt-4o-mini"
 
 epd = epd4in26.EPD()
-epd.init()
 
 logging.basicConfig(level=logging.INFO)
 
@@ -35,6 +34,7 @@ def get_seconds_to_next_interval(now_interval, time_interval):
 now = datetime.now()
 system_message = get_message(now)
 
+draw_text("Searching for internet...", epd)
 internet_check()
 completion = client.chat.completions.create(
     model=ai_model,
@@ -45,8 +45,7 @@ completion = client.chat.completions.create(
     ]
 )
 logging.info("Poem generated")
-completion_content = completion.choices[0].message.content.replace('\n', '/')
-draw_text(completion_content, epd)
+draw_text(completion.choices[0].message.content, epd)
 
 # Sleep until the next interval
 seconds_to_next_interval = get_seconds_to_next_interval(now, interval)
@@ -54,6 +53,7 @@ time.sleep(seconds_to_next_interval)
 
 # Main clock loop
 while True:
+    logging.info("generating poem")
     now = datetime.now()
     system_message = get_message(now)
     internet_check()
@@ -65,9 +65,8 @@ while True:
             {"role": "user", "content": datetime.now().strftime("%I:%M %p")}
         ]
     )
-    logging.info("Poem generated")
-    completion_content = completion.choices[0].message.content.replace('\n', '/')
-    draw_text(completion_content, epd)
+    logging.info("poem generated")
+    draw_text(completion.choices[0].message.content, epd)
 
     now = datetime.now()
     time.sleep(get_seconds_to_next_interval(now, interval))
