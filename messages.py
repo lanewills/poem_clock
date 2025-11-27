@@ -27,7 +27,7 @@ def is_thanksgiving(now):
         first_day_of_month = now.replace(day=1)
         first_day_of_month_weekday = first_day_of_month.weekday()
         # Find the day of the week of the fourth Thursday of the month
-        fourth_thursday = 4 - first_day_of_month_weekday + 3 * 7
+        fourth_thursday = 4 - first_day_of_month_weekday + 4 * 7
         fourth_thursday_date = now.replace(day=fourth_thursday)
         if now == fourth_thursday_date:
             return True
